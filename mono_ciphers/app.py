@@ -1,4 +1,5 @@
 import caesar
+import playfair
 
 
 def main_menu():
@@ -8,6 +9,8 @@ def main_menu():
     print("1. Encrypt - Shifted Caesar")
     print("2. Decrypt - Shifted Caesar")
     print("3. Encrypt from file - Shifted Caesar")
+    print("4. Decrypt from file - Shifted Caesar")
+    print("5. PLAYFAIR from input")
     print("0. Exit")
     print("===========================\n")
 
@@ -25,6 +28,9 @@ def main_menu():
             print("\n===========================")
         elif choice == "4":
             caesar.process_from_file(mode=1)
+            print("\n===========================")
+        elif choice == "5":
+            playfair.process_from_input()
             print("\n===========================")
         elif choice == "0":
             break

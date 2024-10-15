@@ -21,50 +21,10 @@ def print_alphabet(k: int) -> None:
 # 0 ENCRYPT
 # 1 DECRYPT
 def encrypt_letter(i: str, k: int, mode: bool) -> str:
-    if mode is 0:
+    if mode == 0:
         return chr((ord(i) - ord("A") + k) % 26 + ord("A"))
     else:
         return chr((ord(i) - ord("A") - k) % 26 + ord("A"))
-
-
-def process_from_input(mode: bool) -> None:
-    try:
-        key = int(input("\nInsert the shift value (integer):\n"))
-    except ValueError:
-        print("error: The shift value must be an integer.")
-        return
-    text = input(
-        "\nInsert text to " + ("decrypt" if mode == 1 else "encrypt") + ":\n"
-    ).upper()
-
-    result_text = process_text(key, text, mode)
-
-    print("\n" + ("Decrypted" if mode == 1 else "Encrypted") + " text:\n" + result_text)
-
-
-def process_from_file(mode: bool) -> None:
-    try:
-        if mode is 0:
-            file = open("plaintext.txt", "r")
-        else:
-            file = open("ciphertext.txt", "r")
-
-        key = int(file.readline().strip())
-        text = file.read()
-
-        result_text = process_text(key, text, mode)
-        print(
-            "\n"
-            + ("Decrypted" if mode == 1 else "Encrypted")
-            + " text:\n"
-            + result_text
-        )
-    except FileNotFoundError:
-        print("File not found. Please make sure 'plaintext.txt' exists.")
-    except ValueError:
-        print(
-            "Invalid key. Please make sure the first line of the file contains an integer."
-        )
 
 
 # add custom padding char
@@ -85,3 +45,43 @@ def process_text(k: int, plaintext: str, mode: bool) -> str:
         encrypted_text.append(j)
 
     return "".join(encrypted_text)
+
+
+def process_from_input(mode: bool) -> None:
+    try:
+        key = int(input("\nInsert the shift value (integer):\n"))
+    except ValueError:
+        print("error: The shift value must be an integer.")
+        return
+    text = input(
+        "\nInsert text to " + ("decrypt" if mode == 1 else "encrypt") + ":\n"
+    ).upper()
+
+    result_text = process_text(key, text, mode)
+
+    print("\n" + ("Decrypted" if mode == 1 else "Encrypted") + " text:\n" + result_text)
+
+
+def process_from_file(mode: bool) -> None:
+    try:
+        if mode == 0:
+            file = open("plaintext.txt", "r")
+        else:
+            file = open("ciphertext.txt", "r")
+
+        key = int(file.readline().strip())
+        text = file.read()
+
+        result_text = process_text(key, text, mode)
+        print(
+            "\n"
+            + ("Decrypted" if mode == 1 else "Encrypted")
+            + " text:\n"
+            + result_text
+        )
+    except FileNotFoundError:
+        print("File not found. Please make sure 'plaintext.txt' exists.")
+    except ValueError:
+        print(
+            "Invalid key. Please make sure the first line of the file contains an integer."
+        )
